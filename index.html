@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Menentukan Rute Perjalanan</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eaf3f8;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #176b87;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #176b87;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #124d63;
+        }
+
+        #hasil {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e5f5ed;
+            border-radius: 8px;
+            display: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #176b87;
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Program Menentukan Rute Perjalanan</h1>
+
+    <p>
+        Program untuk menentukan rute perjalanan
+        dan jarak antar kota.
+    </p>
+
+    <label>Kota Asal:</label>
+    <select id="asal">
+        <option value="">-- Pilih Kota Asal --</option>
+        <option value="Bantaeng">Bantaeng</option>
+        <option value="Makassar">Makassar</option>
+    </select>
+
+    <label>Kota Tujuan:</label>
+    <select id="tujuan">
+        <option value="">-- Pilih Kota Tujuan --</option>
+        <option value="Makassar">Makassar</option>
+        <option value="Bulukumba">Bulukumba</option>
+        <option value="Parepare">Parepare</option>
+    </select>
+
+    <button onclick="cariRute()">
+        Cari Rute Perjalanan
+    </button>
+
+    <div id="hasil">
+        <h3>Hasil Pencarian:</h3>
+        <p id="jalur"></p>
+        <p id="jarak"></p>
+    </div>
+
+    <h3>Data Rute dan Jarak Antar Kota</h3>
+
+    <table>
+        <tr>
+            <th>Asal</th>
+            <th>Tujuan</th>
+            <th>Jalur</th>
+            <th>Jarak</th>
+        </tr>
+
+        <tr>
+            <td>Bantaeng</td>
+            <td>Makassar</td>
+            <td>Bantaeng - Bulukumba - Makassar</td>
+            <td>125 km</td>
+        </tr>
+
+        <tr>
+            <td>Bantaeng</td>
+            <td>Bulukumba</td>
+            <td>Bantaeng - Bulukumba</td>
+            <td>60 km</td>
+        </tr>
+
+        <tr>
+            <td>Makassar</td>
+            <td>Parepare</td>
+            <td>Makassar - Barru - Parepare</td>
+            <td>155 km</td>
+        </tr>
+    </table>
+
+    <footer>
+        <p>Dibuat oleh: <b>Sulpikawati</b></p>
+    </footer>
+
+</div>
+
+<script>
+
+// Data rute dan jarak antar kota
+const rute = {
+    ("Bantaeng|Makassar"): {
+        jalur: "Bantaeng -> Bulukumba -> Makassar",
+        jarak: 125
+    },
+    ("Bantaeng|Bulukumba"): {
+        jalur: "Bantaeng -> Bulukumba",
+        jarak: 60
+    },
+    ("Makassar|Parepare"): {
+        jalur: "Makassar -> Barru -> Parepare",
+        jarak: 155
+    }
+};
+
+// Mencari rute perjalanan
+function cariRute() {
+
+    let asal = document.getElementById("asal").value;
+    let tujuan = document.getElementById("tujuan").value;
+
+    let hasil = document.getElementById("hasil");
+    let jalur = document.getElementById("jalur");
+    let jarak = document.getElementById("jarak");
+
+    hasil.style.display = "block";
+
+    if (asal === "" || tujuan === "") {
+        jalur.innerHTML = "Silakan pilih kota asal dan tujuan!";
+        jarak.innerHTML = "";
+        return;
+    }
+
+    let data = rute[asal + "|" + tujuan];
+
+    if (data) {
+        jalur.innerHTML = "Rute perjalanan: " + data.jalur;
+        jarak.innerHTML = "Jarak: " + data.jarak + " km";
+    } else {
+        jalur.innerHTML = "Rute tidak ditemukan.";
+        jarak.innerHTML = "";
+    }
+}
+
+</script>
+
+</body>
+</html>
